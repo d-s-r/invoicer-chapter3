@@ -1,5 +1,7 @@
 # whoami
-
+data "external" "username" {
+  program = "whoami"
+}
 
 # aws_vpc.devsecops-vpc:
 resource "aws_vpc" "devsecops-vpc" {
@@ -97,7 +99,7 @@ resource "aws_db_instance" "invoicer-db" {
     storage_type                          = "gp2"
     tags                                  = {
       environment-name = aws_elastic_beanstalk_environment.invoicer-env
-      Owner = Value=$(whoami)
+      Owner = data.username.result
     }
     tags_all                              = {}
     username                              = "invoicer"
